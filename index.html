@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Tasanno — Premium Electronics</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0A0A;--bg2:#111;--card:#161616;--card2:#1C1C1C;--card3:#222;
+  --border:#252525;--border2:#2E2E2E;
+  --gold:#D4AF37;--gold2:#F0CC5A;--gold3:#B8941E;
+  --gold-glow:rgba(212,175,55,.15);--gold-dim:rgba(212,175,55,.08);
+  --text:#F2EFE9;--text2:#A09A8E;--text3:#5C5650;
+  --red:#E8453C;--green:#27AE60;--blue:#2E86DE;
+  --r:10px;--r2:14px;--sh:0 4px 24px rgba(0,0,0,.6);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;min-height:100vh;overflow-x:hidden}
+h1,h2,h3,.serif{font-family:'Playfair Display',serif}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--gold3)}
+button,input,select,textarea{font-family:'Outfit',sans-serif}
+
+/* TOP BAR */
+.topbar{background:#080808;border-bottom:1px solid var(--border);height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;font-size:.78rem;color:var(--text2)}
+.topbar-left,.topbar-right{display:flex;align-items:center;gap:1.6rem}
+.topbar a,.topbar span,.topbar button{color:var(--text2);text-decoration:none;cursor:pointer;transition:color .2s;display:flex;align-items:center;gap:.3rem;background:none;border:none;font-size:.78rem;white-space:nowrap}
+.topbar a:hover,.topbar span:hover{color:var(--gold)}
+.phone{color:var(--gold)!important;font-weight:700;font-size:.86rem}
+.lang-sw{display:flex;align-items:center;background:var(--card2);border:1px solid var(--border2);border-radius:6px;overflow:hidden}
+.lb{background:none;border:none;padding:.2rem .55rem;font-size:.74rem;font-weight:700;color:var(--text3);cursor:pointer;transition:all .2s;letter-spacing:.06em}
+.lb.on{background:var(--gold);color:#0A0A0A}
+
+/* NAVBAR */
+.navbar{background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(0,0,0,.5)}
+.nbi{max-width:1380px;margin:0 auto;display:flex;align-items:center;gap:1rem;padding:.85rem 1.5rem}
+.brand{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:900;letter-spacing:-.02em;background:linear-gradient(135deg,var(--gold),var(--gold2),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap;flex-shrink:0;cursor:pointer;filter:drop-shadow(0 0 16px rgba(212,175,55,.25))}
+.cat-btn{display:flex;align-items:center;gap:.5rem;background:var(--gold);color:#0A0A0A;border:none;padding:.65rem 1.2rem;border-radius:var(--r);font-size:.9rem;font-weight:700;cursor:pointer;transition:all .22s;white-space:nowrap;flex-shrink:0}
+.cat-btn:hover{background:var(--gold2);transform:translateY(-1px)}
+.sw{flex:1;position:relative;max-width:680px}
+.si{width:100%;background:var(--card);border:1.5px solid var(--border2);color:var(--text);padding:.7rem 3rem .7rem 1.1rem;border-radius:var(--r);font-size:.9rem;outline:none;transition:border-color .2s,background .2s}
+.si:focus{border-color:var(--gold);background:var(--card2)}
+.si::placeholder{color:var(--text3)}
+.sb{position:absolute;right:0;top:0;bottom:0;background:var(--gold);border:none;padding:0 1rem;border-radius:0 var(--r) var(--r) 0;cursor:pointer;color:#0A0A0A;font-size:1rem;transition:background .2s}
+.sb:hover{background:var(--gold2)}
+.navacts{display:flex;align-items:center;gap:.2rem;margin-left:auto;flex-shrink:0}
+.na{display:flex;flex-direction:column;align-items:center;background:none;border:none;color:var(--text2);padding:.4rem .65rem;border-radius:8px;cursor:pointer;transition:all .2s;font-size:.72rem;gap:.18rem;position:relative;white-space:nowrap}
+.na:hover{color:var(--gold);background:var(--gold-dim)}
+.na .ni{font-size:1.2rem}
+.nbadge{position:absolute;top:2px;right:5px;background:var(--gold);color:#0A0A0A;border-radius:50%;width:17px;height:17px;display:flex;align-items:center;justify-content:center;font-size:.64rem;font-weight:800;border:2px solid var(--bg2)}
+
+/* NAV2 */
+.nav2{background:var(--card);border-bottom:1px solid var(--border)}
+.nav2i{max-width:1380px;margin:0 auto;display:flex;padding:0 1.5rem;overflow-x:auto}
+.nav2i::-webkit-scrollbar{display:none}
+.n2l{background:none;border:none;color:var(--text2);padding:.7rem 1rem;font-size:.83rem;font-weight:500;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:.4rem}
+.n2l:hover,.n2l.on{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* MAIN */
+.main{max-width:1380px;margin:0 auto;padding:1.5rem}
+
+/* HERO */
+.hero-sec{display:grid;grid-template-columns:1fr 330px;gap:1.2rem;margin-bottom:2rem}
+.hslider{position:relative;border-radius:var(--r2);overflow:hidden;background:var(--card);border:1px solid var(--border);min-height:380px}
+.hslide{position:absolute;inset:0;display:flex;align-items:center;padding:2.5rem 3rem;opacity:0;transition:opacity .5s;pointer-events:none}
+.hslide.on{opacity:1;pointer-events:all}
+.hsbg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.15}
+.hsc{position:relative;z-index:1;max-width:360px}
+.stag{display:inline-block;background:var(--gold);color:#0A0A0A;padding:.25rem .8rem;border-radius:4px;font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.stitle{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,2.9rem);font-weight:900;line-height:1.05;margin-bottom:.7rem}
+.stitle .ac{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ssub{color:var(--text2);font-size:.98rem;margin-bottom:.5rem;font-weight:300}
+.sprice{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--gold);margin-bottom:1.3rem}
+.simg{position:absolute;right:2rem;bottom:0;top:0;width:44%;object-fit:contain;filter:drop-shadow(0 8px 32px rgba(212,175,55,.12));transition:transform .4s}
+.hslide.on .simg{transform:translateY(-6px)}
+.sdots{position:absolute;bottom:1.1rem;left:2.5rem;display:flex;gap:.5rem;z-index:10}
+.sdot{width:22px;height:4px;border-radius:2px;background:var(--border2);border:none;cursor:pointer;transition:all .3s;padding:0}
+.sdot.on{background:var(--gold);width:34px}
+.sarr{position:absolute;top:50%;transform:translateY(-50%);background:rgba(22,22,22,.85);border:1px solid var(--border2);color:var(--text2);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;z-index:10;font-size:1.1rem;backdrop-filter:blur(4px)}
+.sarr:hover{background:var(--gold);color:#0A0A0A;border-color:var(--gold)}
+.sarr.prv{left:1rem}.sarr.nxt{right:1rem}
+
+/* HERO SIDE */
+.hside{display:flex;flex-direction:column;gap:1.1rem}
+.hscard{flex:1;border-radius:var(--r2);border:1px solid var(--border);background:var(--card);padding:1.3rem;position:relative;overflow:hidden;cursor:pointer;transition:all .25s;display:flex;flex-direction:column;justify-content:flex-end;min-height:164px}
+.hscard:hover{border-color:rgba(212,175,55,.3);transform:translateY(-2px)}
+.hsbg2{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.1}
+.hsimg{position:absolute;right:.8rem;top:50%;transform:translateY(-50%);width:96px;height:96px;object-fit:contain;filter:drop-shadow(0 4px 16px rgba(0,0,0,.5))}
+.hscont{position:relative;z-index:1}
+.hstag{font-size:.7rem;color:var(--gold);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem}
+.hstitle{font-size:1.05rem;font-weight:700;line-height:1.2;margin-bottom:.25rem}
+.hsprice{font-size:.92rem;color:var(--gold);font-weight:600}
+
+/* CATEGORIES */
+.cats-sec{margin-bottom:2rem}
+.catsgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.8rem}
+.catcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:1.1rem .8rem .85rem;display:flex;flex-direction:column;align-items:center;gap:.55rem;cursor:pointer;transition:all .25s;text-align:center}
+.catcard:hover,.catcard.on{border-color:rgba(212,175,55,.4);background:var(--card2);transform:translateY(-3px);box-shadow:0 8px 24px rgba(212,175,55,.07)}
+.cico{width:56px;height:56px;border-radius:50%;background:var(--card3);display:flex;align-items:center;justify-content:center;font-size:1.5rem;border:1px solid var(--border2);transition:all .25s}
+.catcard:hover .cico,.catcard.on .cico{background:var(--gold-dim);border-color:rgba(212,175,55,.3)}
+.cname{font-size:.77rem;font-weight:500;color:var(--text2);line-height:1.3;transition:color .2s}
+.catcard:hover .cname,.catcard.on .cname{color:var(--gold)}
+
+/* SECTION HDR */
+.shdr{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:.8rem}
+.stit{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;letter-spacing:-.01em}
+.sall{background:none;border:1px solid var(--border2);color:var(--text2);padding:.4rem 1rem;border-radius:6px;font-size:.82rem;cursor:pointer;transition:all .2s}
+.sall:hover{border-color:var(--gold);color:var(--gold)}
+
+/* PRODUCT GRID */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:1rem}
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;cursor:pointer;transition:all .28s;position:relative;display:flex;flex-direction:column}
+.pcard:hover{border-color:rgba(212,175,55,.35);transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,.55)}
+.pimgw{position:relative;background:var(--card2);padding:1.4rem 1rem 1rem;overflow:hidden}
+.pimg{width:100%;aspect-ratio:1;object-fit:contain;transition:transform .4s}
+.pcard:hover .pimg{transform:scale(1.07)}
+.pbadge{position:absolute;top:.65rem;left:.65rem;padding:.18rem .52rem;border-radius:5px;font-size:.69rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.bnew{background:var(--gold);color:#0A0A0A}
+.bhot{background:var(--red);color:#fff}
+.bsale{background:var(--green);color:#fff}
+.pwish{position:absolute;top:.6rem;right:.6rem;background:var(--card3);border:1px solid var(--border2);border-radius:50%;width:29px;height:29px;display:flex;align-items:center;justify-content:center;font-size:.88rem;cursor:pointer;transition:all .2s;color:var(--text3)}
+.pwish:hover{border-color:var(--red);color:var(--red)}
+.pwish.on{color:var(--red);border-color:var(--red)}
+.inst{position:absolute;bottom:.5rem;left:.65rem;background:var(--blue);color:#fff;border-radius:50px;font-size:.64rem;font-weight:700;padding:.16rem .52rem;letter-spacing:.04em}
+.pinfo{padding:.9rem 1rem 1rem;flex:1;display:flex;flex-direction:column}
+.pcat{font-size:.69rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem}
+.pname{font-size:.87rem;font-weight:500;line-height:1.4;color:var(--text);margin-bottom:.65rem;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ppricew{margin-bottom:.85rem}
+.pprice{font-family:'Playfair Display',serif;font-size:1.18rem;font-weight:700;color:var(--gold)}
+.pcur{font-family:'Outfit',sans-serif;font-size:.71rem;font-weight:400;color:var(--text2);margin-left:.18rem}
+.pold{font-size:.77rem;color:var(--text3);text-decoration:line-through;margin-top:.08rem}
+.pacts{display:flex;gap:.55rem}
+.bcart{flex:1;background:var(--gold-dim);border:1px solid rgba(212,175,55,.2);color:var(--gold);padding:.55rem .4rem;border-radius:8px;font-size:.79rem;font-weight:600;cursor:pointer;transition:all .22s;display:flex;align-items:center;justify-content:center;gap:.3rem}
+.bcart:hover{background:rgba(212,175,55,.17);border-color:var(--gold)}
+.bbuy{flex:1;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;color:#0A0A0A;padding:.55rem .4rem;border-radius:8px;font-size:.79rem;font-weight:700;cursor:pointer;transition:all .22s}
+.bbuy:hover{opacity:.87;transform:translateY(-1px)}
+
+/* PROMO */
+.promogrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;margin:2rem 0}
+.promocard{border-radius:var(--r2);border:1px solid var(--border);background:var(--card);padding:1.4rem;position:relative;overflow:hidden;cursor:pointer;transition:all .25s;display:flex;flex-direction:column;justify-content:flex-end;min-height:155px}
+.promocard:hover{border-color:rgba(212,175,55,.3);transform:translateY(-3px)}
+.promobg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.1}
+.promoimg{position:absolute;right:.8rem;bottom:0;top:50%;transform:translateY(-50%);height:105px;width:auto;object-fit:contain;filter:drop-shadow(0 4px 20px rgba(0,0,0,.5))}
+.promocont{position:relative;z-index:1}
+.promosub{font-size:.71rem;color:var(--gold);font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.28rem}
+.prototitle{font-size:1rem;font-weight:700;margin-bottom:.3rem;line-height:1.2}
+.proprice{font-size:.88rem;color:var(--gold);font-weight:600}
+
+/* DEALS TIMER */
+.dhead{display:flex;align-items:center;gap:1.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.twrap{display:flex;align-items:center;gap:.45rem}
+.tlbl{font-size:.78rem;color:var(--text2)}
+.tblk{background:var(--card2);border:1px solid var(--border2);border-radius:6px;padding:.28rem .52rem;font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--gold);min-width:34px;text-align:center}
+.tsep{color:var(--text3);font-weight:700}
+
+/* MODALS */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:400;display:flex;align-items:center;justify-content:center;padding:1rem;animation:fdi .18s}
+@keyframes fdi{from{opacity:0}to{opacity:1}}
+.mo{background:var(--card);border:1px solid var(--border2);border-radius:18px;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;animation:sui .22s}
+@keyframes sui{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.moh{padding:1.35rem 1.6rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--card);z-index:1}
+.mot{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700}
+.mox{background:var(--card2);border:1px solid var(--border);color:var(--text2);width:32px;height:32px;border-radius:50%;font-size:1.1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.mox:hover{background:var(--red);border-color:var(--red);color:#fff}
+.mob{padding:1.4rem 1.6rem}
+
+/* FORMS */
+.fg{margin-bottom:1rem}
+.fl{display:block;font-size:.79rem;color:var(--text2);margin-bottom:.38rem;letter-spacing:.03em;font-weight:500}
+.fi{width:100%;background:var(--bg2);border:1.5px solid var(--border2);color:var(--text);padding:.7rem .95rem;border-radius:8px;font-size:.9rem;outline:none;transition:border-color .2s}
+.fi:focus{border-color:var(--gold)}
+.fi::placeholder{color:var(--text3)}
+textarea.fi{resize:vertical;min-height:75px}
+select.fi{cursor:pointer;appearance:none}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* BUTTONS */
+.bpri{background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;color:#0A0A0A;padding:.8rem 1.8rem;border-radius:9px;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .22s;box-shadow:0 4px 20px rgba(212,175,55,.18)}
+.bpri:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(212,175,55,.3)}
+.bout{background:none;border:1.5px solid var(--border2);color:var(--text2);padding:.76rem 1.4rem;border-radius:9px;font-size:.87rem;font-weight:500;cursor:pointer;transition:all .22s}
+.bout:hover{border-color:var(--gold);color:var(--gold)}
+
+/* CART */
+.citem{display:flex;align-items:center;gap:.85rem;padding:.95rem 0;border-bottom:1px solid var(--border)}
+.citem:last-child{border-bottom:none}
+.cimg{width:66px;height:66px;object-fit:contain;background:var(--card2);border-radius:8px;padding:.45rem;flex-shrink:0;border:1px solid var(--border)}
+.cinfo{flex:1;min-width:0}
+.cname{font-size:.84rem;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cprice{font-size:.82rem;color:var(--gold);font-weight:600;margin-top:.2rem}
+.qrow{display:flex;align-items:center;gap:.45rem;margin-top:.45rem}
+.qb{background:var(--card2);border:1px solid var(--border2);color:var(--text);width:26px;height:26px;border-radius:5px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:1rem}
+.qb:hover{border-color:var(--gold);color:var(--gold)}
+.qn{font-size:.9rem;min-width:22px;text-align:center;font-weight:600}
+.qdel{background:none;border:none;color:var(--text3);cursor:pointer;padding:.3rem;border-radius:4px;transition:color .2s;font-size:1.1rem}
+.qdel:hover{color:var(--red)}
+.ctotal{display:flex;justify-content:space-between;align-items:center;padding:.9rem 0;border-top:1px solid var(--border);margin-top:.4rem}
+.ctlbl{font-size:.88rem;color:var(--text2)}
+.ctval{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--gold)}
+
+/* AUTH TABS */
+.atabs{display:flex;background:var(--bg2);border-radius:10px;padding:.28rem;margin-bottom:1.4rem;gap:.28rem}
+.at{flex:1;padding:.58rem;border-radius:8px;font-size:.87rem;font-weight:600;color:var(--text2);cursor:pointer;transition:all .2s;background:none;border:none;text-align:center}
+.at.on{background:var(--card2);color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.4)}
+
+/* QUICK VIEW */
+.qvl{display:flex;gap:1.3rem}
+.qvimg{width:175px;height:175px;object-fit:contain;background:var(--card2);border-radius:10px;padding:.9rem;border:1px solid var(--border);flex-shrink:0}
+
+/* ADMIN */
+.adwrap{display:grid;grid-template-columns:225px 1fr;min-height:calc(100vh - 108px)}
+.adside{background:var(--card);border-right:1px solid var(--border);padding:1.4rem 1rem}
+.adbrand{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--gold);margin-bottom:.2rem}
+.adsub{font-size:.71rem;color:var(--text3);margin-bottom:1.4rem;padding-bottom:.9rem;border-bottom:1px solid var(--border)}
+.adsi{display:flex;align-items:center;gap:.6rem;padding:.62rem .88rem;border-radius:8px;color:var(--text2);font-size:.84rem;font-weight:500;cursor:pointer;transition:all .2s;background:none;border:none;width:100%;text-align:left;margin-bottom:.18rem}
+.adsi:hover,.adsi.on{background:var(--gold-dim);color:var(--gold)}
+.adm{padding:1.7rem}
+.adc{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:1.3rem;margin-bottom:1.1rem}
+.adct{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;margin-bottom:1.1rem}
+.strow{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.4rem}
+.stc{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:1.1rem;text-align:center}
+.stn{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:700;color:var(--gold)}
+.stl{font-size:.74rem;color:var(--text2);margin-top:.18rem}
+.orow{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:.95rem 1.1rem;margin-bottom:.75rem;display:flex;align-items:flex-start;gap:.9rem;flex-wrap:wrap}
+.ob{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(212,175,55,.25);padding:.18rem .65rem;border-radius:50px;font-size:.74rem;font-weight:600;white-space:nowrap}
+.snew{background:rgba(39,174,96,.1);color:var(--green);border:1px solid rgba(39,174,96,.25);padding:.18rem .65rem;border-radius:50px;font-size:.71rem;font-weight:600}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--card2);border:1px solid var(--border2);padding:.88rem 1.3rem;border-radius:12px;font-size:.86rem;font-weight:500;box-shadow:0 12px 48px rgba(0,0,0,.7);animation:ti .28s;z-index:600;display:flex;align-items:center;gap:.65rem;max-width:310px}
+.toast.ok{border-color:rgba(39,174,96,.4)}
+.toast.err{border-color:rgba(232,69,60,.35)}
+@keyframes ti{from{transform:translateX(110px);opacity:0}to{transform:translateX(0);opacity:1}}
+.empty{text-align:center;padding:3.5rem 2rem;color:var(--text2)}
+.emico{font-size:2.8rem;margin-bottom:.8rem}
+
+@media(max-width:1100px){
+  .hero-sec{grid-template-columns:1fr}
+  .hside{flex-direction:row}
+  .hscard{min-height:135px}
+  .promogrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .topbar{display:none}
+  .nbi{flex-wrap:wrap;padding:.7rem 1rem;gap:.6rem}
+  .brand{font-size:1.5rem}
+  .sw{order:10;max-width:100%;flex:0 0 100%}
+  .cat-btn span:last-child{display:none}
+  .adwrap{grid-template-columns:1fr}
+  .adside{display:none}
+  .fr2{grid-template-columns:1fr}
+  .strow{grid-template-columns:1fr 1fr}
+  .promogrid{grid-template-columns:1fr}
+  .main{padding:1rem}
+  .catsgrid{grid-template-columns:repeat(auto-fill,minmax(88px,1fr))}
+  .qvl{flex-direction:column}
+  .qvimg{width:100%;height:180px}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect,useRef}=React;
+
+const T={
+uz:{
+  brand:"Tasanno",
+  topStore:"Bizning do'konlarimiz",topCorp:"Yuridik shaxslar uchun",topPay:"To'lov usullari",
+  phone:"+99871 200 99 44",
+  search:"Mahsulot qidirish...",catalog:"Katalog",
+  login:"Kirish",wish:"Sevimlilar",cart:"Savatcha",
+  home:"Bosh sahifa",newlbl:"Yangiliklar",sale:"Aksiya",brands:"Brendlar",service:"Xizmat",
+  cats:["Barchasi","Smartfonlar","Noutbuklar","Televizorlar","Audio","Planshetlar","Maishiy texnika","Dronlar","Soatlar","Aksessuarlar"],
+  catIcos:["🛍️","📱","💻","📺","🎧","📟","🏠","🚁","⌚","🔌"],
+  hitSale:"Xit savdo",seeAll:"Barchasini ko'rish →",
+  deals:"Kunlik takliflar",timerLbl:"Tugashiga:",
+  addCart:"Savatga",buyNow:"Sotib olish",
+  wishTitle:"Sevimlilar",cartTitle:"Savat",
+  total:"Jami:",checkout:"Buyurtma berish",
+  emptyCart:"Savat bo'sh",emptyWish:"Sevimlilar bo'sh",
+  orderTitle:"Buyurtmani rasmiylashtirish",
+  nameLbl:"Ism Familiya",phoneLbl:"Telefon",addrLbl:"Manzil",
+  confirmOrder:"Tasdiqlash ✓",
+  loginTitle:"Tizimga kirish",regTitle:"Ro'yxatdan o'tish",
+  emailLbl:"Email",passLbl:"Parol",nameFld:"Ism",
+  loginBtn:"Kirish",regBtn:"Ro'yxat",
+  logout:"Chiqish",admin:"Admin",adminPass:"Admin paroli",enterAdmin:"Kirish",
+  dashboard:"Boshqaruv",inventory:"Inventar",orders:"Buyurtmalar",
+  addProd:"Mahsulot qo'shish",editProd:"Tahrirlash",
+  nameUz:"Nom (UZ)",nameRu:"Nom (RU)",descUz:"Tavsif (UZ)",descRu:"Tavsif (RU)",
+  priceFld:"Narx (so'm)",oldPriceFld:"Eski narx",catFld:"Kategoriya",imgFld:"Rasm URL",badgeFld:"Badge",instFld:"Bo'lib to'lash",
+  save:"Saqlash",cancel:"Bekor",delete:"O'chirish",
+  added:"Savatga qo'shildi ✓",liked:"Sevimliga qo'shildi ✓",
+  ordered:"Buyurtma qabul qilindi! ✓",saved:"Saqlandi ✓",deleted:"O'chirildi",
+  sum:"so'm",qty:"dona",adminHint:"Parol: admin123",
+  quickView:"Tezkor ko'rish",noAcc:"Akkaunt yo'qmi?",haveAcc:"Akkaunt bormi?",
+},
+ru:{
+  brand:"Tasanno",
+  topStore:"Наши магазины",topCorp:"Для юридических лиц",topPay:"Способы оплаты",
+  phone:"+99871 200 99 44",
+  search:"Поиск товаров...",catalog:"Каталог",
+  login:"Войти",wish:"Избранное",cart:"Корзина",
+  home:"Главная",newlbl:"Новинки",sale:"Акции",brands:"Бренды",service:"Сервис",
+  cats:["Все","Смартфоны","Ноутбуки","Телевизоры","Аудио","Планшеты","Бытовая техника","Дроны","Часы","Аксессуары"],
+  catIcos:["🛍️","📱","💻","📺","🎧","📟","🏠","🚁","⌚","🔌"],
+  hitSale:"Хит продаж",seeAll:"Смотреть все →",
+  deals:"Ежедневные предложения",timerLbl:"До конца:",
+  addCart:"В корзину",buyNow:"Купить",
+  wishTitle:"Избранное",cartTitle:"Корзина",
+  total:"Итого:",checkout:"Оформить заказ",
+  emptyCart:"Корзина пуста",emptyWish:"Избранное пусто",
+  orderTitle:"Оформление заказа",
+  nameLbl:"Имя Фамилия",phoneLbl:"Телефон",addrLbl:"Адрес",
+  confirmOrder:"Подтвердить ✓",
+  loginTitle:"Вход в систему",regTitle:"Регистрация",
+  emailLbl:"Email",passLbl:"Пароль",nameFld:"Имя",
+  loginBtn:"Войти",regBtn:"Регистрация",
+  logout:"Выйти",admin:"Админ",adminPass:"Пароль администратора",enterAdmin:"Войти",
+  dashboard:"Панель",inventory:"Инвентарь",orders:"Заказы",
+  addProd:"Добавить товар",editProd:"Редактировать",
+  nameUz:"Название (UZ)",nameRu:"Название (RU)",descUz:"Описание (UZ)",descRu:"Описание (RU)",
+  priceFld:"Цена (сум)",oldPriceFld:"Старая цена",catFld:"Категория",imgFld:"URL изображения",badgeFld:"Badge",instFld:"Рассрочка",
+  save:"Сохранить",cancel:"Отмена",delete:"Удалить",
+  added:"Добавлено в корзину ✓",liked:"Добавлено в избранное ✓",
+  ordered:"Заказ принят! ✓",saved:"Сохранено ✓",deleted:"Удалено",
+  sum:"сум",qty:"шт",adminHint:"Пароль: admin123",
+  quickView:"Быстрый просмотр",noAcc:"Нет аккаунта?",haveAcc:"Есть аккаунт?",
+}};
+
+const fmt=n=>new Intl.NumberFormat('uz-UZ').format(n);
+const CKEYS=["All","Smartfonlar","Noutbuklar","Televizorlar","Audio","Planshetlar","Maishiy","Dronlar","Soatlar","Aksessuarlar"];
+
+const SEED=[
+  {id:1,nameUz:"iPhone 15 Pro Max 256GB",nameRu:"iPhone 15 Pro Max 256ГБ",descUz:"Apple A17 Pro chipi, titan korpus, 48MP kamera tizimi, USB-C",descRu:"Чип Apple A17 Pro, корпус из титана, система камер 48МП, USB-C",price:13990000,oldPrice:15500000,cat:"Smartfonlar",img:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-7inch-naturaltitanium?wid=800&hei=800&fmt=p-jpg&qlt=80",badge:"NEW",inst:"50-0-2"},
+  {id:2,nameUz:"Samsung Galaxy S24 Ultra 512GB",nameRu:"Samsung Galaxy S24 Ultra 512ГБ",descUz:"Snapdragon 8 Gen 3, S Pen kiritilgan, 200MP kamera",descRu:"Snapdragon 8 Gen 3, S Pen в комплекте, камера 200МП",price:15490000,oldPrice:null,cat:"Smartfonlar",img:"https://images.samsung.com/is/image/samsung/p6pim/uk/2401/gallery/uk-galaxy-s24-ultra-s928-sm-s928bzadeub-thumb-539573403",badge:"HOT",inst:"50-0-2"},
+  {id:3,nameUz:"MacBook Pro 14\" M3 Pro",nameRu:"MacBook Pro 14\" M3 Pro",descUz:"Apple M3 Pro, 18GB RAM, 512GB SSD, 120Hz ProMotion",descRu:"Apple M3 Pro, 18ГБ ОЗУ, 512ГБ SSD, 120Гц ProMotion",price:32990000,oldPrice:35000000,cat:"Noutbuklar",img:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202301?wid=800&hei=800&fmt=jpeg&qlt=90",badge:"SALE",inst:"50-0-6"},
+  {id:4,nameUz:"Sony WH-1000XM5",nameRu:"Sony WH-1000XM5",descUz:"Eng yaxshi noise-cancelling quloqchin, 30 soat batareya",descRu:"Лучшие наушники с ANC, 30 часов работы от аккумулятора",price:4290000,oldPrice:4800000,cat:"Audio",img:"https://www.sony.com/image/5d02da5df552836db894cead8a68f5f3?fmt=png-alpha&wid=600",badge:"SALE",inst:""},
+  {id:5,nameUz:"iPad Pro 12.9\" M2 Wi-Fi 256GB",nameRu:"iPad Pro 12.9\" M2 Wi-Fi 256ГБ",descUz:"Apple M2, Liquid Retina XDR displey, ProMotion 120Hz",descRu:"Apple M2, дисплей Liquid Retina XDR, ProMotion 120Гц",price:17900000,oldPrice:null,cat:"Planshetlar",img:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-13-select-wifi-spacegray-202210?wid=800&hei=800&fmt=jpeg&qlt=90",badge:"",inst:"50-0-6"},
+  {id:6,nameUz:"Samsung Neo QLED 65\" 8K",nameRu:"Samsung Neo QLED 65\" 8K",descUz:"8K Smart TV, Quantum Matrix Technology, 120Hz, Tizen OS",descRu:"8K Smart TV, Quantum Matrix, 120Гц, Tizen OS",price:28500000,oldPrice:32000000,cat:"Televizorlar",img:"https://images.samsung.com/is/image/samsung/p6pim/uk/ua65qn900cuxzt/gallery/uk-qled-8k-qn900c-ua65qn900cuxzt-thumb-534863078",badge:"SALE",inst:"50-0-12"},
+  {id:7,nameUz:"DJI Mini 4 Pro Fly More",nameRu:"DJI Mini 4 Pro Fly More",descUz:"4K/60fps, omnidireksional to'siq sensori, 34 daqiqa uchish vaqti",descRu:"4K/60к/с, всенаправленный датчик препятствий, 34 мин полёта",price:9800000,oldPrice:null,cat:"Dronlar",img:"https://store-jp.dji.com/cdn/shop/files/DJI-Mini-4-Pro-Fly-More-Combo-DJI-RC-2-With-DJI-Mini-4-Pro-Hover.png?v=1695290984&width=800",badge:"NEW",inst:"50-0-3"},
+  {id:8,nameUz:"Apple Watch Ultra 2 GPS+Cellular",nameRu:"Apple Watch Ultra 2 GPS+Cellular",descUz:"49mm, Titanium, Action button, GPS+Cellular, 36 soat batareya",descRu:"49мм, титан, кнопка Action, GPS+Cellular, 36 часов",price:8200000,oldPrice:9000000,cat:"Soatlar",img:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/watch-ultra2-49-alpine-orange-select-q423?wid=800&hei=800&fmt=jpeg&qlt=90",badge:"",inst:"50-0-3"},
+  {id:9,nameUz:"Xiaomi 14 Ultra 512GB",nameRu:"Xiaomi 14 Ultra 512ГБ",descUz:"Snapdragon 8 Gen 3, Leica kamera, 90W HyperCharge, IP68",descRu:"Snapdragon 8 Gen 3, камера Leica, зарядка HyperCharge 90Вт, IP68",price:10500000,oldPrice:11500000,cat:"Smartfonlar",img:"https://i02.appmifile.com/mi-com-product/fly-birds/xiaomi-14-ultra/pc/img_hero2.png",badge:"NEW",inst:"50-0-3"},
+  {id:10,nameUz:"LG OLED evo C3 55\" 4K",nameRu:"LG OLED evo C3 55\" 4K",descUz:"OLED evo, 4K 120Hz, Dolby Vision IQ, WebOS 23, Gaming",descRu:"OLED evo, 4K 120Гц, Dolby Vision IQ, WebOS 23, Gaming",price:18900000,oldPrice:21000000,cat:"Televizorlar",img:"https://www.lg.com/us/images/tvs/md08003619/gallery/medium01.jpg",badge:"SALE",inst:"50-0-6"},
+];
+
+const SLIDES=[
+  {tag:"Yangi Kolleksiya",t1:"iPhone 15",t2:"Pro Max",sub:"Titan. Kuch. Pro.",price:"13 990 000 so'm",img:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-7inch-naturaltitanium?wid=800&hei=800&fmt=p-jpg&qlt=80",grad:"linear-gradient(135deg,#1a1000,#0A0A0A)"},
+  {tag:"Top Taklif",t1:"MacBook",t2:"Pro M3",sub:"Ajoyib quvvat. Noyob tezlik.",price:"32 990 000 so'm",img:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202301?wid=800&hei=800&fmt=jpeg&qlt=90",grad:"linear-gradient(135deg,#001a15,#0A0A0A)"},
+  {tag:"HOT SALE",t1:"Samsung",t2:"Galaxy S24",sub:"AI imkoniyatlari bilan.",price:"15 490 000 so'm",img:"https://images.samsung.com/is/image/samsung/p6pim/uk/2401/gallery/uk-galaxy-s24-ultra-s928-sm-s928bzadeub-thumb-539573403",grad:"linear-gradient(135deg,#00101a,#0A0A0A)"},
+];
+
+function App(){
+  const [lang,setLang]=useState(()=>localStorage.getItem('tn_l')||'uz');
+  const t=T[lang];
+  const [prods,setProds]=useState(()=>{try{return JSON.parse(localStorage.getItem('tn_p'))||SEED}catch{return SEED}});
+  const [cart,setCart]=useState(()=>{try{return JSON.parse(localStorage.getItem('tn_c'))||[]}catch{return[]}});
+  const [wish,setWish]=useState(()=>{try{return JSON.parse(localStorage.getItem('tn_w'))||[]}catch{return[]}});
+  const [orders,setOrders]=useState(()=>{try{return JSON.parse(localStorage.getItem('tn_o'))||[]}catch{return[]}});
+  const [users,setUsers]=useState(()=>{try{return JSON.parse(localStorage.getItem('tn_us'))||[]}catch{return[]}});
+  const [user,setUser]=useState(()=>{try{return JSON.parse(localStorage.getItem('tn_u'))||null}catch{return null}});
+  const [adminIn,setAdminIn]=useState(()=>sessionStorage.getItem('tn_a')==='1');
+  const [page,setPage]=useState('home');
+  const [modal,setModal]=useState(null);
+  const [toast,setToast]=useState(null);
+  const [editPr,setEditPr]=useState(null);
+  const [qvProd,setQvProd]=useState(null);
+  const [aCat,setACat]=useState(0);
+
+  useEffect(()=>{localStorage.setItem('tn_l',lang)},[lang]);
+  useEffect(()=>{localStorage.setItem('tn_c',JSON.stringify(cart))},[cart]);
+  useEffect(()=>{localStorage.setItem('tn_w',JSON.stringify(wish))},[wish]);
+  useEffect(()=>{localStorage.setItem('tn_o',JSON.stringify(orders))},[orders]);
+  useEffect(()=>{localStorage.setItem('tn_p',JSON.stringify(prods))},[prods]);
+  useEffect(()=>{localStorage.setItem('tn_us',JSON.stringify(users))},[users]);
+
+  const showToast=(msg,type='ok')=>{setToast({msg,type});setTimeout(()=>setToast(null),2600)};
+  const addCart=p=>{setCart(c=>{const e=c.find(i=>i.id===p.id);return e?c.map(i=>i.id===p.id?{...i,qty:i.qty+1}:i):[...c,{...p,qty:1}]});showToast(t.added)};
+  const remCart=id=>setCart(c=>c.filter(i=>i.id!==id));
+  const adjQty=(id,d)=>setCart(c=>c.map(i=>i.id===id?{...i,qty:Math.max(1,i.qty+d)}:i));
+  const clrCart=()=>setCart([]);
+  const cTotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const cCount=cart.reduce((s,i)=>s+i.qty,0);
+  const togWish=p=>{const h=wish.find(i=>i.id===p.id);setWish(w=>h?w.filter(i=>i.id!==p.id):[...w,p]);if(!h)showToast(t.liked)};
+  const isWish=id=>!!wish.find(i=>i.id===id);
+  const placeOrder=info=>{setOrders(o=>[{id:Date.now(),customer:info,items:[...cart],total:cTotal,date:new Date().toLocaleString()},...o]);clrCart();showToast(t.ordered);setModal(null)};
+  const loginUser=(email,pass)=>{const u=users.find(u=>u.email===email&&u.pass===pass);if(u){setUser(u);localStorage.setItem('tn_u',JSON.stringify(u));setModal(null);showToast('Xush kelibsiz, '+u.name+'!')}else showToast('Xato email yoki parol','err')};
+  const regUser=(name,email,pass)=>{if(users.find(u=>u.email===email)){showToast('Bu email allaqachon ro\'yxatdan o\'tgan','err');return}const nu={id:Date.now(),name,email,pass};setUsers(u=>[...u,nu]);setUser(nu);localStorage.setItem('tn_u',JSON.stringify(nu));setModal(null);showToast('Xush kelibsiz, '+name+'!')};
+  const logoutUser=()=>{setUser(null);localStorage.removeItem('tn_u');showToast('Chiqildi')};
+  const saveProd=p=>{if(p.id)setProds(ps=>ps.map(x=>x.id===p.id?p:x));else setProds(ps=>[...ps,{...p,id:Date.now()}]);showToast(t.saved);setModal(null);setEditPr(null)};
+  const delProd=id=>{setProds(ps=>ps.filter(p=>p.id!==id));showToast(t.deleted)};
+
+  const ctx={t,lang,setLang,page,setPage,modal,setModal,showToast,
+    prods,saveProd,delProd,editPr,setEditPr,
+    cart,addCart,remCart,adjQty,clrCart,cTotal,cCount,
+    wish,togWish,isWish,orders,placeOrder,
+    user,loginUser,regUser,logoutUser,users,
+    adminIn,setAdminIn,aCat,setACat,qvProd,setQvProd};
+
+  return(
+    <div>
+      <TopBar ctx={ctx}/>
+      <Navbar ctx={ctx}/>
+      <Nav2 ctx={ctx}/>
+      {page==='home'&&<HomePage ctx={ctx}/>}
+      {page==='catalog'&&<CatalogPage ctx={ctx}/>}
+      {page==='admin'&&<AdminPage ctx={ctx}/>}
+      {modal==='cart'&&<CartModal ctx={ctx}/>}
+      {modal==='wish'&&<WishModal ctx={ctx}/>}
+      {modal==='checkout'&&<CheckoutModal ctx={ctx}/>}
+      {modal==='auth'&&<AuthModal ctx={ctx}/>}
+      {modal==='alog'&&<AdminLoginMod ctx={ctx}/>}
+      {modal==='addp'&&<ProdForm ctx={ctx} prod={null}/>}
+      {modal==='editp'&&<ProdForm ctx={ctx} prod={editPr}/>}
+      {qvProd&&<QuickView ctx={ctx}/>}
+      {toast&&<div className={`toast ${toast.type}`}>{toast.type==='ok'?'✓':'✗'} {toast.msg}</div>}
+    </div>
+  );
+}
+
+function TopBar({ctx}){
+  const {t,lang,setLang}=ctx;
+  return(
+    <div className="topbar">
+      <div className="topbar-left">
+        <span>📍 {t.topStore}</span>
+        <span>{t.topCorp}</span>
+        <span>{t.topPay}</span>
+      </div>
+      <div className="topbar-right">
+        <span>📞 {lang==='uz'?"Aloqa markazi : ":""}<span className="phone">{t.phone}</span></span>
+        <div className="lang-sw">
+          <button className={`lb ${lang==='uz'?'on':''}`} onClick={()=>setLang('uz')}>UZ</button>
+          <button className={`lb ${lang==='ru'?'on':''}`} onClick={()=>setLang('ru')}>RU</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Navbar({ctx}){
+  const {t,setPage,setModal,cCount,wish,user,logoutUser,adminIn,setACat}=ctx;
+  return(
+    <div className="navbar">
+      <div className="nbi">
+        <div className="brand" onClick={()=>setPage('home')}>{t.brand}<span style={{color:'var(--gold)',fontStyle:'normal',fontSize:'1rem',marginLeft:'.05rem'}}>✦</span></div>
+        <button className="cat-btn" onClick={()=>{setPage('catalog');setACat(0)}}>
+          <span>☰</span> <span>{t.catalog}</span>
+        </button>
+        <div className="sw">
+          <input className="si" placeholder={t.search}/>
+          <button className="sb">🔍</button>
+        </div>
+        <div className="navacts">
+          {user
+            ?<button className="na" onClick={logoutUser} title={user.name}>
+                <span className="ni">👤</span>
+                <span style={{maxWidth:64,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',fontSize:'.7rem'}}>{user.name.split(' ')[0]}</span>
+              </button>
+            :<button className="na" onClick={()=>setModal('auth')}>
+                <span className="ni">👤</span><span>{t.login}</span>
+              </button>
+          }
+          <button className="na" onClick={()=>setModal('wish')}>
+            <span className="ni">♡</span><span>{t.wish}</span>
+            {wish.length>0&&<span className="nbadge">{wish.length}</span>}
+          </button>
+          <button className="na" onClick={()=>setModal('cart')}>
+            <span className="ni">🛒</span><span>{t.cart}</span>
+            {cCount>0&&<span className="nbadge">{cCount}</span>}
+          </button>
+          {!adminIn
+            ?<button className="na" onClick={()=>setModal('alog')}>
+                <span className="ni">⚙️</span><span>{t.admin}</span>
+              </button>
+            :<button className="na" onClick={()=>ctx.setPage('admin')} style={{color:'var(--gold)'}}>
+                <span className="ni">🔐</span><span>{t.dashboard}</span>
+              </button>
+          }
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Nav2({ctx}){
+  const {t,page,setPage,setACat}=ctx;
+  const lnks=[{k:'home',l:t.home,i:'🏠'},{k:'new',l:t.newlbl,i:'✨'},{k:'sale',l:t.sale,i:'🏷️'},{k:'brands',l:t.brands,i:'💎'},{k:'service',l:t.service,i:'🔧'}];
+  return(
+    <div className="nav2">
+      <div className="nav2i">
+        {lnks.map(n=>(
+          <button key={n.k} className={`n2l ${page===n.k?'on':''}`}
+            onClick={()=>{if(n.k==='home'){setPage('home');setACat(0)}else if(n.k==='sale'||n.k==='new'){setPage('catalog');setACat(0)}else setPage(n.k)}}>
+            {n.i} {n.l}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function HomePage({ctx}){
+  const {t,lang,prods,addCart,togWish,isWish,setModal,setQvProd,setPage,setACat}=ctx;
+  const [slide,setSlide]=useState(0);
+  const [tmr,setTmr]=useState({h:5,m:23,s:47});
+  useEffect(()=>{const iv=setInterval(()=>setSlide(s=>(s+1)%SLIDES.length),4600);return()=>clearInterval(iv)},[]);
+  useEffect(()=>{const iv=setInterval(()=>setTmr(p=>{let{h,m,s}=p;s--;if(s<0){s=59;m--}if(m<0){m=59;h--}if(h<0){h=23;m=59;s=59}return{h,m,s}}),1000);return()=>clearInterval(iv)},[]);
+  const pad=n=>String(n).padStart(2,'0');
+  return(
+    <div className="main">
+      {/* HERO */}
+      <div className="hero-sec">
+        <div className="hslider">
+          {SLIDES.map((sl,i)=>(
+            <div key={i} className={`hslide ${i===slide?'on':''}`}>
+              <div className="hsbg" style={{background:sl.grad}}/>
+              <div className="hsc">
+                <span className="stag">{sl.tag}</span>
+                <div className="stitle">{sl.t1}<br/><span className="ac">{sl.t2}</span></div>
+                <div className="ssub">{sl.sub}</div>
+                <div className="sprice">{sl.price}</div>
+                <div style={{display:'flex',gap:'.75rem',flexWrap:'wrap'}}>
+                  <button className="bpri" onClick={()=>{setPage('catalog');setACat(0)}}>{t.buyNow}</button>
+                  <button className="bout" onClick={()=>{setPage('catalog');setACat(0)}}>{t.seeAll}</button>
+                </div>
+              </div>
+              <img className="simg" src={sl.img} alt={sl.t1} onError={e=>{e.target.style.display='none'}}/>
+            </div>
+          ))}
+          <div className="sdots">{SLIDES.map((_,i)=><button key={i} className={`sdot ${i===slide?'on':''}`} onClick={()=>setSlide(i)}/>)}</div>
+          <button className="sarr prv" onClick={()=>setSlide(s=>(s-1+SLIDES.length)%SLIDES.length)}>‹</button>
+          <button className="sarr nxt" onClick={()=>setSlide(s=>(s+1)%SLIDES.length)}>›</button>
+        </div>
+        <div className="hside">
+          {[{img:prods[0]?.img,tag:lang==='uz'?"Chegirma -15%":"Скидка -15%",title:lang==='uz'?"iPhone 15 seriyasi":"Серия iPhone 15",price:prods[0]?.price,cat:1,grad:'linear-gradient(135deg,#1a1000,#0A0A0A)'},
+            {img:prods[2]?.img,tag:lang==='uz'?"Eng yaxshi narx":"Лучшая цена",title:lang==='uz'?"MacBook Pro M3":"MacBook Pro M3",price:prods[2]?.price,cat:2,grad:'linear-gradient(135deg,#001a15,#0A0A0A)'}
+          ].map((hs,i)=>(
+            <div key={i} className="hscard" onClick={()=>{setPage('catalog');setACat(hs.cat)}}>
+              <div className="hsbg2" style={{background:hs.grad}}/>
+              <img className="hsimg" src={hs.img} alt="" onError={e=>{e.target.style.display='none'}}/>
+              <div className="hscont">
+                <div className="hstag">{hs.tag}</div>
+                <div className="hstitle">{hs.title}</div>
+                <div className="hsprice">{hs.price?fmt(hs.price)+' '+t.sum:''}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CATEGORIES */}
+      <div className="cats-sec">
+        <div className="catsgrid">
+          {t.cats.map((c,i)=>(
+            <div key={i} className={`catcard ${ctx.aCat===i?'on':''}`} onClick={()=>{setACat(i);setPage('catalog')}}>
+              <div className="cico">{t.catIcos[i]}</div>
+              <div className="cname">{c}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* HIT SAVDO */}
+      <section style={{marginBottom:'2.5rem'}}>
+        <div className="shdr">
+          <h2 className="stit">⭐ {t.hitSale}</h2>
+          <button className="sall" onClick={()=>{setPage('catalog');setACat(0)}}>{t.seeAll}</button>
+        </div>
+        <div className="pgrid">
+          {prods.slice(0,5).map(p=><PCard key={p.id} p={p} ctx={ctx}/>)}
+        </div>
+      </section>
+
+      {/* PROMO BANNERS */}
+      <div className="promogrid" style={{marginBottom:'2.5rem'}}>
+        {prods.slice(0,3).map((p,i)=>{
+          const nm=lang==='uz'?p.nameUz:p.nameRu;
+          const grads=['linear-gradient(135deg,#1a1000,#0A0A0A)','linear-gradient(135deg,#00101a,#0A0A0A)','linear-gradient(135deg,#001a10,#0A0A0A)'];
+          const tags=lang==='uz'?['Chegirma 15%','Yangi keldi','Eng yaxshi narx']:['Скидка 15%','Новинка','Лучшая цена'];
+          return(
+            <div key={p.id} className="promocard" onClick={()=>{setPage('catalog');setACat(0)}}>
+              <div className="promobg" style={{background:grads[i]}}/>
+              <img className="promoimg" src={p.img} alt="" onError={e=>{e.target.style.display='none'}}/>
+              <div className="promocont">
+                <div className="promosub">{tags[i]}</div>
+                <div className="prototitle">{nm}</div>
+                <div className="proprice">{fmt(p.price)} {t.sum}</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* DAILY DEALS */}
+      <section style={{marginBottom:'2.5rem'}}>
+        <div className="dhead">
+          <h2 className="stit">🔥 {t.deals}</h2>
+          <div className="twrap">
+            <span className="tlbl">{t.timerLbl}</span>
+            <span className="tblk">{pad(tmr.h)}</span><span className="tsep">:</span>
+            <span className="tblk">{pad(tmr.m)}</span><span className="tsep">:</span>
+            <span className="tblk">{pad(tmr.s)}</span>
+          </div>
+          <button className="sall" onClick={()=>setPage('catalog')}>{t.seeAll}</button>
+        </div>
+        <div className="pgrid">
+          {prods.slice(4,9).map(p=><PCard key={p.id} p={p} ctx={ctx}/>)}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function CatalogPage({ctx}){
+  const {t,lang,prods,aCat,setACat}=ctx;
+  const [search,setSearch]=useState('');
+  const filtered=prods.filter(p=>{
+    const ic=aCat===0||p.cat===CKEYS[aCat];
+    const q=search.toLowerCase();
+    const nm=(lang==='uz'?p.nameUz:p.nameRu).toLowerCase();
+    return ic&&nm.includes(q);
+  });
+  return(
+    <div className="main">
+      <div className="shdr" style={{marginBottom:'1.3rem'}}>
+        <h2 className="stit">{t.catalog} <span style={{color:'var(--gold)',fontFamily:'Outfit',fontSize:'1rem',fontWeight:400}}>({filtered.length})</span></h2>
+        <div style={{position:'relative',flex:1,maxWidth:360}}>
+          <input className="si" value={search} onChange={e=>setSearch(e.target.value)} placeholder={t.search} style={{paddingRight:'2.8rem'}}/>
+          <span style={{position:'absolute',right:'.9rem',top:'50%',transform:'translateY(-50%)',color:'var(--text3)'}}>🔍</span>
+        </div>
+      </div>
+      <div style={{display:'flex',gap:'.55rem',flexWrap:'wrap',marginBottom:'1.4rem'}}>
+        {t.cats.map((c,i)=>(
+          <button key={i} onClick={()=>setACat(i)}
+            style={{background:aCat===i?'rgba(212,175,55,.1)':'var(--card)',border:`1px solid ${aCat===i?'var(--gold)':'var(--border)'}`,color:aCat===i?'var(--gold)':'var(--text2)',padding:'.42rem .95rem',borderRadius:'50px',fontSize:'.81rem',cursor:'pointer',transition:'all .2s',fontWeight:aCat===i?600:400,fontFamily:'Outfit'}}>
+            {c}
+          </button>
+        ))}
+      </div>
+      {filtered.length===0
+        ?<div className="empty"><div className="emico">📦</div><p>{lang==='uz'?"Hech narsa topilmadi":"Ничего не найдено"}</p></div>
+        :<div className="pgrid">{filtered.map(p=><PCard key={p.id} p={p} ctx={ctx}/>)}</div>
+      }
+    </div>
+  );
+}
+
+function PCard({p,ctx,isAdmin,onEdit,onDelete}){
+  const {t,lang,addCart,togWish,isWish,setModal,setQvProd}=ctx;
+  const nm=lang==='uz'?p.nameUz:p.nameRu;
+  const handleBuy=()=>{addCart(p);setModal('checkout')};
+  return(
+    <div className="pcard">
+      <div className="pimgw">
+        {p.badge&&<span className={`pbadge ${p.badge==='NEW'?'bnew':p.badge==='HOT'?'bhot':'bsale'}`}>{p.badge}</span>}
+        {!isAdmin&&<button className={`pwish ${isWish(p.id)?'on':''}`} onClick={e=>{e.stopPropagation();togWish(p)}}>{isWish(p.id)?'♥':'♡'}</button>}
+        <img className="pimg" src={p.img} alt={nm} onClick={()=>!isAdmin&&setQvProd(p)}
+          style={{cursor:isAdmin?'default':'pointer'}}
+          onError={e=>{e.target.src='https://via.placeholder.com/300x300/161616/D4AF37?text=Tasanno'}}/>
+        {p.inst&&<span className="inst">{p.inst}</span>}
+      </div>
+      <div className="pinfo">
+        <div className="pcat">{p.cat}</div>
+        <div className="pname" onClick={()=>!isAdmin&&setQvProd(p)} style={{cursor:isAdmin?'default':'pointer'}}>{nm}</div>
+        <div className="ppricew">
+          <div className="pprice">{fmt(p.price)}<span className="pcur">{t.sum}</span></div>
+          {p.oldPrice&&<div className="pold">{fmt(p.oldPrice)} {t.sum}</div>}
+        </div>
+        {isAdmin
+          ?<div className="pacts">
+              <button className="bcart" onClick={()=>onEdit(p)}>✏️ {t.editProd}</button>
+              <button className="bcart" style={{color:'var(--red)',borderColor:'rgba(232,69,60,.22)'}} onClick={()=>onDelete(p.id)}>🗑</button>
+            </div>
+          :<div className="pacts">
+              <button className="bcart" onClick={()=>addCart(p)}>+ {t.addCart}</button>
+              <button className="bbuy" onClick={handleBuy}>{t.buyNow}</button>
+            </div>
+        }
+      </div>
+    </div>
+  );
+}
+
+function QuickView({ctx}){
+  const {t,lang,qvProd:p,setQvProd,addCart,setModal}=ctx;
+  const nm=lang==='uz'?p.nameUz:p.nameRu;
+  const desc=lang==='uz'?p.descUz:p.descRu;
+  return(
+    <div className="ov" onClick={e=>{if(e.target.className==='ov')setQvProd(null)}}>
+      <div className="mo" style={{maxWidth:560}}>
+        <div className="moh"><div className="mot">🔍 {t.quickView}</div><button className="mox" onClick={()=>setQvProd(null)}>×</button></div>
+        <div className="mob">
+          <div className="qvl">
+            <img className="qvimg" src={p.img} alt={nm} onError={e=>{e.target.src='https://via.placeholder.com/175/161616/D4AF37?text=IMG'}}/>
+            <div style={{flex:1}}>
+              <div style={{fontSize:'.73rem',color:'var(--text3)',textTransform:'uppercase',letterSpacing:'.09em'}}>{p.cat}</div>
+              <div style={{fontSize:'1.08rem',fontWeight:600,margin:'.4rem 0 .3rem',lineHeight:1.4}}>{nm}</div>
+              {p.badge&&<span className={`pbadge ${p.badge==='NEW'?'bnew':p.badge==='HOT'?'bhot':'bsale'}`} style={{position:'static',display:'inline-block',marginBottom:'.5rem'}}>{p.badge}</span>}
+              <div style={{fontFamily:'Playfair Display',fontSize:'1.5rem',fontWeight:700,color:'var(--gold)',margin:'.3rem 0 .2rem'}}>{fmt(p.price)} <small style={{fontFamily:'Outfit',fontSize:'.73rem',fontWeight:400,color:'var(--text2)'}}>{t.sum}</small></div>
+              {p.oldPrice&&<div style={{fontSize:'.79rem',color:'var(--text3)',textDecoration:'line-through',marginBottom:'.4rem'}}>{fmt(p.oldPrice)} {t.sum}</div>}
+              {p.inst&&<div style={{display:'inline-block',background:'#2E86DE',color:'#fff',borderRadius:'50px',padding:'.2rem .75rem',fontSize:'.73rem',fontWeight:700,marginBottom:'.9rem'}}>{p.inst}</div>}
+              <div style={{fontSize:'.84rem',color:'var(--text2)',lineHeight:1.6,marginBottom:'1.1rem'}}>{desc}</div>
+              <div style={{display:'flex',gap:'.65rem'}}>
+                <button className="bpri" style={{flex:1}} onClick={()=>{addCart(p);setQvProd(null)}}>+ {t.addCart}</button>
+                <button className="bout" style={{flex:1}} onClick={()=>{addCart(p);setQvProd(null);setModal('checkout')}}>{t.buyNow}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CartModal({ctx}){
+  const {t,lang,cart,remCart,adjQty,cTotal,setModal,clrCart}=ctx;
+  return(
+    <div className="ov" onClick={e=>{if(e.target.className==='ov')setModal(null)}}>
+      <div className="mo">
+        <div className="moh">
+          <div className="mot">🛒 {t.cartTitle} <span style={{color:'var(--text2)',fontWeight:400,fontSize:'1rem'}}>({cart.reduce((s,i)=>s+i.qty,0)} {t.qty})</span></div>
+          <button className="mox" onClick={()=>setModal(null)}>×</button>
+        </div>
+        <div className="mob">
+          {cart.length===0?<div className="empty"><div className="emico">🛒</div><p>{t.emptyCart}</p></div>
+          :<>
+            {cart.map(item=>{
+              const nm=lang==='uz'?item.nameUz:item.nameRu;
+              return(
+                <div className="citem" key={item.id}>
+                  <img className="cimg" src={item.img} alt={nm} onError={e=>{e.target.src='https://via.placeholder.com/66/1C1C1C/D4AF37?text=IMG'}}/>
+                  <div className="cinfo">
+                    <div className="cname">{nm}</div>
+                    <div className="cprice">{fmt(item.price*item.qty)} {t.sum}</div>
+                    <div className="qrow">
+                      <button className="qb" onClick={()=>adjQty(item.id,-1)}>−</button>
+                      <span className="qn">{item.qty}</span>
+                      <button className="qb" onClick={()=>adjQty(item.id,1)}>+</button>
+                      <span style={{fontSize:'.72rem',color:'var(--text3)',marginLeft:'.25rem'}}>{fmt(item.price)}/{t.qty}</span>
+                    </div>
+                  </div>
+                  <button className="qdel" onClick={()=>remCart(item.id)}>🗑</button>
+                </div>
+              );
+            })}
+            <div className="ctotal">
+              <span className="ctlbl">{t.total}</span>
+              <span className="ctval">{fmt(cTotal)} <small style={{fontFamily:'Outfit',fontSize:'.72rem',fontWeight:400,color:'var(--text2)'}}>{t.sum}</small></span>
+            </div>
+            <div style={{display:'flex',gap:'.75rem',marginTop:'.9rem'}}>
+              <button className="bout" style={{flex:1}} onClick={clrCart}>🗑 {t.delete}</button>
+              <button className="bpri" style={{flex:2}} onClick={()=>setModal('checkout')}>{t.checkout}</button>
+            </div>
+          </>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WishModal({ctx}){
+  const {t,lang,wish,togWish,addCart,setModal}=ctx;
+  return(
+    <div className="ov" onClick={e=>{if(e.target.className==='ov')setModal(null)}}>
+      <div className="mo">
+        <div className="moh">
+          <div className="mot">♥ {t.wishTitle} <span style={{color:'var(--text2)',fontWeight:400,fontSize:'1rem'}}>({wish.length})</span></div>
+          <button className="mox" onClick={()=>setModal(null)}>×</button>
+        </div>
+        <div className="mob">
+          {wish.length===0?<div className="empty"><div className="emico">♡</div><p>{t.emptyWish}</p></div>
+          :wish.map(p=>{
+            const nm=lang==='uz'?p.nameUz:p.nameRu;
+            return(
+              <div className="citem" key={p.id}>
+                <img className="cimg" src={p.img} alt={nm} onError={e=>{e.target.src='https://via.placeholder.com/66/1C1C1C/D4AF37?text=IMG'}}/>
+                <div className="cinfo">
+                  <div className="cname">{nm}</div>
+                  <div className="cprice">{fmt(p.price)} {t.sum}</div>
+                  <button className="bcart" style={{marginTop:'.5rem',fontSize:'.77rem',padding:'.32rem .75rem',display:'inline-flex'}} onClick={()=>{addCart(p);setModal('cart')}}>+ {t.addCart}</button>
+                </div>
+                <button className="qdel" style={{color:'var(--red)'}} onClick={()=>togWish(p)}>♥</button>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CheckoutModal({ctx}){
+  const {t,lang,cart,cTotal,setModal,placeOrder,user}=ctx;
+  const [nm,setNm]=useState(user?.name||'');
+  const [ph,setPh]=useState('');
+  const [ad,setAd]=useState('');
+  const sub=()=>{if(!nm||!ph||!ad){alert(lang==='uz'?"Barcha maydonlarni to'ldiring":"Заполните все поля");return}placeOrder({name:nm,phone:ph,addr:ad})};
+  return(
+    <div className="ov" onClick={e=>{if(e.target.className==='ov')setModal(null)}}>
+      <div className="mo">
+        <div className="moh"><div className="mot">📦 {t.orderTitle}</div><button className="mox" onClick={()=>setModal(null)}>×</button></div>
+        <div className="mob">
+          <div style={{background:'var(--bg2)',border:'1px solid var(--border)',borderRadius:8,padding:'.9rem 1rem',marginBottom:'1.1rem',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <span style={{fontSize:'.86rem',color:'var(--text2)'}}>{cart.reduce((s,i)=>s+i.qty,0)} {t.qty}</span>
+            <span style={{fontFamily:'Playfair Display',color:'var(--gold)',fontWeight:700,fontSize:'1.1rem'}}>{fmt(cTotal)} {t.sum}</span>
+          </div>
+          <div className="fg"><label className="fl">{t.nameLbl}</label><input className="fi" value={nm} onChange={e=>setNm(e.target.value)} placeholder="Abdullayev Jasur"/></div>
+          <div className="fg"><label className="fl">{t.phoneLbl}</label><input className="fi" value={ph} onChange={e=>setPh(e.target.value)} placeholder="+998 90 123 45 67"/></div>
+          <div className="fg"><label className="fl">{t.addrLbl}</label><textarea className="fi" value={ad} onChange={e=>setAd(e.target.value)} placeholder={lang==='uz'?"Toshkent, Chilonzor...":"Ташкент, Чиланзар..."}/></div>
+          <button className="bpri" style={{width:'100%',padding:'.88rem'}} onClick={sub}>{t.confirmOrder}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AuthModal({ctx}){
+  const {t,setModal,loginUser,regUser}=ctx;
+  const [tab,setTab]=useState('login');
+  const [nm,setNm]=useState('');
+  const [em,setEm]=useState('');
+  const [pw,setPw]=useState('');
+  const sub=()=>tab==='login'?loginUser(em,pw):regUser(nm,em,pw);
+  return(
+    <div className="ov" onClick={e=>{if(e.target.className==='ov')setModal(null)}}>
+      <div className="mo" style={{maxWidth:420}}>
+        <div className="moh"><div className="mot">👤 {tab==='login'?t.loginTitle:t.regTitle}</div><button className="mox" onClick={()=>setModal(null)}>×</button></div>
+        <div className="mob">
+          <div className="atabs">
+            <button className={`at ${tab==='login'?'on':''}`} onClick={()=>setTab('login')}>{t.loginBtn}</button>
+            <button className={`at ${tab==='reg'?'on':''}`} onClick={()=>setTab('reg')}>{t.regBtn}</button>
+          </div>
+          {tab==='reg'&&<div className="fg"><label className="fl">{t.nameFld}</label><input className="fi" value={nm} onChange={e=>setNm(e.target.value)} placeholder="Jasur Abdullayev"/></div>}
+          <div className="fg"><label className="fl">{t.emailLbl}</label><input className="fi" type="email" value={em} onChange={e=>setEm(e.target.value)} placeholder="email@example.com"/></div>
+          <div className="fg"><label className="fl">{t.passLbl}</label><input className="fi" type="password" value={pw} onChange={e=>setPw(e.target.value)} placeholder="••••••••" onKeyDown={e=>e.key==='Enter'&&sub()}/></div>
+          <button className="bpri" style={{width:'100%',padding:'.88rem',marginTop:'.3rem'}} onClick={sub}>{tab==='login'?t.loginBtn:t.regBtn}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AdminLoginMod({ctx}){
+  const {t,setModal,setAdminIn,setPage,showToast}=ctx;
+  const [pw,setPw]=useState('');
+  const sub=()=>{if(pw==='admin123'){setAdminIn(true);sessionStorage.setItem('tn_a','1');setPage('admin');setModal(null);showToast('Admin paneliga xush kelibsiz!')}else showToast('Noto\'g\'ri parol','err')};
+  return(
+    <div className="ov" onClick={e=>{if(e.target.className==='ov')setModal(null)}}>
+      <div className="mo" style={{maxWidth:380}}>
+        <div className="moh"><div className="mot">🔐 {t.admin}</div><button className="mox" onClick={()=>setModal(null)}>×</button></div>
+        <div className="mob">
+          <div style={{background:'rgba(212,175,55,.07)',border:'1px solid rgba(212,175,55,.18)',borderRadius:8,padding:'.8rem 1rem',marginBottom:'1.1rem',fontSize:'.82rem',color:'var(--text2)'}}>
+            💡 {t.adminHint}
+          </div>
+          <div className="fg"><label className="fl">{t.adminPass}</label><input className="fi" type="password" value={pw} onChange={e=>setPw(e.target.value)} placeholder="••••••••" onKeyDown={e=>e.key==='Enter'&&sub()}/></div>
+          <button className="bpri" style={{width:'100%',padding:'.88rem'}} onClick={sub}>{t.enterAdmin}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProdForm({ctx,prod}){
+  const {t,lang,setModal,saveProd,setEditPr}=ctx;
+  const cats=["Smartfonlar","Noutbuklar","Televizorlar","Audio","Planshetlar","Maishiy","Dronlar","Soatlar","Aksessuarlar"];
+  const [f,sf]=useState(prod||{nameUz:'',nameRu:'',descUz:'',descRu:'',price:'',oldPrice:'',cat:'Smartfonlar',img:'',badge:'',inst:''});
+  const s=(k,v)=>sf(p=>({...p,[k]:v}));
+  const sub=()=>{if(!f.nameUz||!f.price){alert('Majburiy maydonlarni to\'ldiring');return}saveProd({...f,price:Number(f.price),oldPrice:f.oldPrice?Number(f.oldPrice):null})};
+  const close=()=>{setModal(null);setEditPr(null)};
+  return(
+    <div className="ov" onClick={e=>{if(e.target.className==='ov')close()}}>
+      <div className="mo" style={{maxWidth:600}}>
+        <div className="moh"><div className="mot">{prod?t.editProd:t.addProd}</div><button className="mox" onClick={close}>×</button></div>
+        <div className="mob">
+          <div className="fr2">
+            <div className="fg"><label className="fl">{t.nameUz} *</label><input className="fi" value={f.nameUz} onChange={e=>s('nameUz',e.target.value)}/></div>
+            <div className="fg"><label className="fl">{t.nameRu}</label><input className="fi" value={f.nameRu} onChange={e=>s('nameRu',e.target.value)}/></div>
+          </div>
+          <div className="fg"><label className="fl">{t.descUz}</label><textarea className="fi" value={f.descUz} onChange={e=>s('descUz',e.target.value)}/></div>
+          <div className="fg"><label className="fl">{t.descRu}</label><textarea className="fi" value={f.descRu} onChange={e=>s('descRu',e.target.value)}/></div>
+          <div className="fr2">
+            <div className="fg"><label className="fl">{t.priceFld} *</label><input className="fi" type="number" value={f.price} onChange={e=>s('price',e.target.value)}/></div>
+            <div className="fg"><label className="fl">{t.oldPriceFld}</label><input className="fi" type="number" value={f.oldPrice||''} onChange={e=>s('oldPrice',e.target.value)}/></div>
+          </div>
+          <div className="fr2">
+            <div className="fg"><label className="fl">{t.catFld}</label>
+              <select className="fi" value={f.cat} onChange={e=>s('cat',e.target.value)}>
+                {cats.map(c=><option key={c}>{c}</option>)}
+              </select>
+            </div>
+            <div className="fg"><label className="fl">{t.badgeFld} (NEW/HOT/SALE)</label><input className="fi" value={f.badge} onChange={e=>s('badge',e.target.value)} placeholder="NEW"/></div>
+          </div>
+          <div className="fr2">
+            <div className="fg"><label className="fl">{t.imgFld}</label><input className="fi" value={f.img} onChange={e=>s('img',e.target.value)} placeholder="https://..."/></div>
+            <div className="fg"><label className="fl">{t.instFld} (50-0-3)</label><input className="fi" value={f.inst} onChange={e=>s('inst',e.target.value)} placeholder="50-0-3"/></div>
+          </div>
+          <div style={{display:'flex',gap:'.75rem',marginTop:'.5rem'}}>
+            <button className="bout" style={{flex:1}} onClick={close}>{t.cancel}</button>
+            <button className="bpri" style={{flex:2}} onClick={sub}>{t.save}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AdminPage({ctx}){
+  const {t,lang,prods,orders,users,setModal,setEditPr,delProd,adminIn,setAdminIn,setPage,showToast}=ctx;
+  const [tab,setTab]=useState('dashboard');
+  if(!adminIn)return(
+    <div style={{display:'flex',alignItems:'center',justifyContent:'center',minHeight:'60vh',flexDirection:'column',gap:'1rem'}}>
+      <p style={{color:'var(--text2)'}}>{lang==='uz'?"Admin paneliga kirish uchun":"Для входа в панель администратора"}</p>
+      <button className="bpri" onClick={()=>setModal('alog')}>🔐 {t.enterAdmin}</button>
+    </div>
+  );
+  const totalRev=orders.reduce((s,o)=>s+o.total,0);
+  const doLogout=()=>{setAdminIn(false);sessionStorage.removeItem('tn_a');setPage('home');showToast('Admin chiqdi')};
+  const menu=[{k:'dashboard',i:'📊',l:t.dashboard},{k:'inventory',i:'📦',l:t.inventory},{k:'orders',i:'📋',l:t.orders}];
+  return(
+    <div className="adwrap">
+      <aside className="adside">
+        <div className="adbrand">{t.brand} ✦</div>
+        <div className="adsub">Admin Panel v2.0</div>
+        {menu.map(m=><button key={m.k} className={`adsi ${tab===m.k?'on':''}`} onClick={()=>setTab(m.k)}>{m.i} {m.l}</button>)}
+        <hr style={{border:'none',borderTop:'1px solid var(--border)',margin:'1rem 0'}}/>
+        <button className="adsi" onClick={doLogout} style={{color:'#E8453C'}}>🚪 {t.logout}</button>
+      </aside>
+      <main className="adm">
+        {tab==='dashboard'&&(
+          <>
+            <h2 style={{fontFamily:'Playfair Display',fontSize:'1.45rem',marginBottom:'1.4rem'}}>📊 {t.dashboard}</h2>
+            <div className="strow">
+              <div className="stc"><div className="stn">{prods.length}</div><div className="stl">{lang==='uz'?"Mahsulotlar":"Товары"}</div></div>
+              <div className="stc"><div className="stn">{orders.length}</div><div className="stl">{t.orders}</div></div>
+              <div className="stc"><div className="stn">{users.length}</div><div className="stl">{lang==='uz'?"Foydalanuvchilar":"Пользователи"}</div></div>
+              <div className="stc"><div className="stn" style={{fontSize:'1.35rem'}}>{fmt(totalRev)}</div><div className="stl">{lang==='uz'?"Jami daromad":"Общий доход"}</div></div>
+            </div>
+            <div className="adc">
+              <div className="adct">🔥 {lang==='uz'?"So'nggi buyurtmalar":"Последние заказы"}</div>
+              {orders.slice(0,4).map(o=>(
+                <div className="orow" key={o.id}>
+                  <div style={{flex:1}}>
+                    <div style={{fontWeight:600}}>{o.customer.name}</div>
+                    <div style={{fontSize:'.79rem',color:'var(--text2)',marginTop:'.18rem'}}>📞 {o.customer.phone} · {o.date}</div>
+                    <div style={{fontSize:'.79rem',color:'var(--text3)'}}>📍 {o.customer.addr}</div>
+                  </div>
+                  <span className="ob">{fmt(o.total)} {t.sum}</span>
+                  <span className="snew">{lang==='uz'?"Yangi":"Новый"}</span>
+                </div>
+              ))}
+              {orders.length===0&&<div className="empty" style={{padding:'2rem'}}><div className="emico">📋</div></div>}
+            </div>
+          </>
+        )}
+        {tab==='inventory'&&(
+          <>
+            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'1.4rem'}}>
+              <h2 style={{fontFamily:'Playfair Display',fontSize:'1.45rem'}}>📦 {t.inventory}</h2>
+              <button className="bpri" onClick={()=>setModal('addp')}>+ {t.addProd}</button>
+            </div>
+            <div className="pgrid">
+              {prods.map(p=><PCard key={p.id} p={p} ctx={ctx} isAdmin onEdit={p=>{ctx.setEditPr(p);setModal('editp')}} onDelete={delProd}/>)}
+            </div>
+          </>
+        )}
+        {tab==='orders'&&(
+          <>
+            <h2 style={{fontFamily:'Playfair Display',fontSize:'1.45rem',marginBottom:'1.4rem'}}>📋 {t.orders} ({orders.length})</h2>
+            {orders.length===0
+              ?<div className="empty"><div className="emico">📋</div><p>{lang==='uz'?"Hozircha buyurtma yo'q":"Заказов пока нет"}</p></div>
+              :orders.map(o=>(
+                <div className="adc" key={o.id} style={{marginBottom:'1rem'}}>
+                  <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',flexWrap:'wrap',gap:'.75rem',marginBottom:'.9rem'}}>
+                    <div>
+                      <div style={{fontWeight:700,fontSize:'1rem'}}>{o.customer.name}</div>
+                      <div style={{fontSize:'.8rem',color:'var(--text2)',marginTop:'.18rem'}}>📞 {o.customer.phone}</div>
+                      <div style={{fontSize:'.8rem',color:'var(--text2)'}}>📍 {o.customer.addr}</div>
+                      <div style={{fontSize:'.74rem',color:'var(--text3)',marginTop:'.2rem'}}>🕐 {o.date}</div>
+                    </div>
+                    <div style={{textAlign:'right'}}>
+                      <div style={{fontFamily:'Playfair Display',color:'var(--gold)',fontWeight:700,fontSize:'1.25rem'}}>{fmt(o.total)} {t.sum}</div>
+                      <span className="snew" style={{marginTop:'.3rem',display:'inline-block'}}>{lang==='uz'?"Yangi":"Новый"}</span>
+                    </div>
+                  </div>
+                  <hr style={{border:'none',borderTop:'1px solid var(--border)',margin:'.4rem 0 .75rem'}}/>
+                  <div style={{display:'flex',gap:'.45rem',flexWrap:'wrap'}}>
+                    {o.items.map(item=>(
+                      <div key={item.id} style={{display:'flex',alignItems:'center',gap:'.45rem',background:'var(--bg2)',border:'1px solid var(--border)',padding:'.3rem .75rem',borderRadius:7,fontSize:'.77rem'}}>
+                        <img src={item.img} alt="" style={{width:26,height:26,objectFit:'contain',background:'var(--card)',borderRadius:4}} onError={e=>{e.target.style.display='none'}}/>
+                        <span>{lang==='uz'?item.nameUz:item.nameRu}</span>
+                        <span style={{color:'var(--gold)',fontWeight:600}}>×{item.qty}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))
+            }
+          </>
+        )}
+      </main>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
