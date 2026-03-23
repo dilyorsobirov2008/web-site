@@ -246,7 +246,8 @@ select.fi{cursor:pointer;appearance:none}
   .hscard{min-height:135px}
   .promogrid{grid-template-columns:1fr 1fr}
 }
-@media(max-width:768px){
+.na-mobile-only{display:none}
+@media(max-width:768px){.na-mobile-only{display:flex}}
   .topbar{display:none}
   .nbi{flex-wrap:wrap;padding:.7rem 1rem;gap:.6rem}
   .brand{font-size:1.5rem}
@@ -285,7 +286,7 @@ select.fi{cursor:pointer;appearance:none}
   .strow{grid-template-columns:1fr 1fr;gap:.6rem}
   /* CATALOG FILTER */
   .n2l{padding:.55rem .7rem;font-size:.76rem}
-}
+
 @media(max-width:480px){
   .pgrid{grid-template-columns:repeat(2,1fr);gap:.55rem}
   .catsgrid{grid-template-columns:repeat(auto-fill,minmax(75px,1fr));gap:.55rem}
@@ -468,6 +469,7 @@ if(localStorage.getItem('tn_ver')!==DATA_VER){localStorage.removeItem('tn_p');lo
       {qvProd&&<QuickView ctx={ctx}/>}
       {buyProd&&<BuyModal ctx={ctx}/>}
       {toast&&<div className={`toast ${toast.type}`}>{toast.type==='ok'?'✓':'✗'} {toast.msg}</div>}
+      <Footer ctx={ctx}/>
     </div>
   );
 }
@@ -477,9 +479,6 @@ function TopBar({ctx}){
   return(
     <div className="topbar">
       <div className="topbar-left">
-        <span>📍 {t.topStore}</span>
-        <span>{t.topCorp}</span>
-        <span style={{cursor:"pointer"}} onClick={()=>window.open("tolov.html","_blank")}>{t.topPay}</span>
       </div>
       <div className="topbar-right">
         <span>📞 {lang==='uz'?"Aloqa markazi : ":""}<span className="phone" style={{cursor:'pointer'}} onClick={()=>{setPage('catalog');setACat(1)}}>{t.phone}</span></span>
@@ -506,6 +505,12 @@ function Navbar({ctx}){
           <button className="sb">🔍</button>
         </div>
         <div className="navacts">
+          <button className="na na-mobile-only" onClick={()=>window.open('tolov.html','_blank')}>
+            <span className="ni">💳</span><span>{t.topPay}</span>
+          </button>
+          <button className="na na-mobile-only" onClick={()=>setPage('service')}>
+            <span className="ni">🔧</span><span>{t.service}</span>
+          </button>
           <button className="na" onClick={()=>setModal('wish')}>
             <span className="ni">♡</span><span>{t.wish}</span>
             {wish.length>0&&<span className="nbadge">{wish.length}</span>}
@@ -536,7 +541,7 @@ function Nav2({ctx}){
       <div className="nav2i">
         {lnks.map(n=>(
           <button key={n.k} className={`n2l ${page===n.k?'on':''}`}
-            onClick={()=>{if(n.k==='home'){setPage('home');setACat(0)}else if(n.k==='sale'||n.k==='new'){setPage('catalog');setACat(0)}else setPage(n.k)}}>
+            onClick={()=>{if(n.k==='home'){setPage('home');setACat(0)}else if(n.k==='sale'||n.k==='new'){setPage('catalog');setACat(0)}else if(n.k==='pay'){window.open('tolov.html','_blank')}else setPage(n.k)}}>
             {n.i} {n.l}
           </button>
         ))}
@@ -699,7 +704,6 @@ function PCard({p,ctx,isAdmin,onEdit,onDelete}){
     <div className="pcard">
       <div className="pimgw">
         {p.badge&&<span className={`pbadge ${p.badge==='NEW'?'bnew':p.badge==='HOT'?'bhot':'bsale'}`}>{p.badge}</span>}
-        {!isAdmin&&<button className={`pwish ${isWish(p.id)?'on':''}`} onClick={e=>{e.stopPropagation();togWish(p)}}>{isWish(p.id)?'♥':'♡'}</button>}
         <img className="pimg" src={p.img} alt={nm} onClick={()=>!isAdmin&&setQvProd(p)}
           style={{cursor:isAdmin?'default':'pointer'}}
           onError={e=>{e.target.src='https://via.placeholder.com/300x300/161616/D4AF37?text=Tasanno'}}/>
@@ -858,7 +862,34 @@ function CheckoutModal({ctx}){
           </div>
           <div className="fg"><label className="fl">{t.nameLbl}</label><input className="fi" value={nm} onChange={e=>setNm(e.target.value)} placeholder="Abdullayev Jasur"/></div>
           <div className="fg"><label className="fl">{t.phoneLbl}</label><input className="fi" value={ph} onChange={e=>setPh(e.target.value)} placeholder="+998 90 123 45 67"/></div>
-          <div className="fg"><label className="fl">{t.addrLbl}</label><textarea className="fi" value={ad} onChange={e=>setAd(e.target.value)} placeholder={lang==='uz'?"Toshkent, Chilonzor...":"Ташкент, Чиланзар..."}/></div>
+          <div className="fg">
+            <label className="fl">{t.addrLbl}</label>
+            <div style={{position:'relative'}}>
+              <textarea className="fi" value={ad} onChange={e=>setAd(e.target.value)} placeholder={lang==='uz'?"Toshkent, Chilonzor...":"Ташкент, Чиланзар..."} style={{paddingRight:'2.8rem'}}/>
+              <button
+                title={lang==='uz'?"Joylashuvni aniqlash":"Определить местоположение"}
+                onClick={()=>{
+                  if(!navigator.geolocation){alert(lang==='uz'?"Brauzer lokatsiyani qo'llab-quvvatlamaydi":"Браузер не поддерживает геолокацию");return;}
+                  navigator.geolocation.getCurrentPosition(
+                    pos=>{
+                      const {latitude:la,longitude:lo}=pos.coords;
+                      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${la}&lon=${lo}&format=json`)
+                        .then(r=>r.json())
+                        .then(d=>setAd(d.display_name||`${la.toFixed(5)}, ${lo.toFixed(5)}`))
+                        .catch(()=>setAd(`${la.toFixed(5)}, ${lo.toFixed(5)}`));
+                    },
+                    ()=>alert(lang==='uz'?"Lokatsiyaga ruxsat berilmadi":"Доступ к геолокации запрещён")
+                  );
+                }}
+                style={{position:'absolute',right:0,top:0,width:'2.6rem',height:'2.6rem',background:'var(--gold)',border:'none',borderRadius:'0 var(--r) 0 0',cursor:'pointer',fontSize:'1rem',display:'flex',alignItems:'center',justifyContent:'center',transition:'background .2s'}}
+                onMouseOver={e=>e.currentTarget.style.background='var(--gold2)'}
+                onMouseOut={e=>e.currentTarget.style.background='var(--gold)'}
+              >📍</button>
+            </div>
+            <div style={{fontSize:'.73rem',color:'var(--text3)',marginTop:'.3rem'}}>
+              {lang==='uz'?"📍 tugmasini bosib joylashuvingizni avtomatik aniqlang":"Нажмите 📍 для автоматического определения адреса"}
+            </div>
+          </div>
           <button className="bpri" style={{width:'100%',padding:'.88rem'}} onClick={sub}>{t.confirmOrder}</button>
         </div>
       </div>
@@ -902,11 +933,11 @@ function BuyModal({ctx}){
   const [ph,setPh]=useState('');
   const [addr,setAddr]=useState('');
 
-  const goForm=(t)=>{setType(t);setStep('form')};
+  const goForm=(tp)=>{setType(tp);setStep('form')};
   const confirm=()=>{
     if(!nm2||!ph){showToast(lang==='uz'?"Ism va telefon kiriting":"Заполните имя и телефон","err");return}
     addCart(p);
-    placeOrder({name:nm2,phone:ph,addr:addr||lang==='uz'?"Ko'rsatilmagan":"Не указан"});
+    placeOrder({name:nm2,phone:ph,addr:addr||(lang==='uz'?"Ko'rsatilmagan":"Не указан")});
     setBuyProd(null);
     showToast(lang==='uz'?"Buyurtma qabul qilindi! ✓":"Заказ принят! ✓");
   };
@@ -964,7 +995,34 @@ function BuyModal({ctx}){
               </div>
               <div className="fg"><label className="fl">{lang==='uz'?"Ism Familiya *":"Имя Фамилия *"}</label><input className="fi" value={nm2} onChange={e=>setNm2(e.target.value)} placeholder={lang==='uz'?"Jasur Abdullayev":"Джасур Абдуллаев"}/></div>
               <div className="fg"><label className="fl">{lang==='uz'?"Telefon *":"Телефон *"}</label><input className="fi" value={ph} onChange={e=>setPh(e.target.value)} placeholder="+998 90 123 45 67"/></div>
-              <div className="fg"><label className="fl">{lang==='uz'?"Manzil":"Адрес"}</label><input className="fi" value={addr} onChange={e=>setAddr(e.target.value)} placeholder={lang==='uz'?"Toshkent, Chilonzor...":"Ташкент, Чиланзар..."}/></div>
+              <div className="fg">
+                <label className="fl">{lang==='uz'?"Manzil":"Адрес"}</label>
+                <div style={{position:'relative'}}>
+                  <input className="fi" value={addr} onChange={e=>setAddr(e.target.value)} placeholder={lang==='uz'?"Toshkent, Chilonzor...":"Ташкент, Чиланзар..."} style={{paddingRight:'2.8rem'}}/>
+                  <button
+                    title={lang==='uz'?"Joylashuvni aniqlash":"Определить местоположение"}
+                    onClick={()=>{
+                      if(!navigator.geolocation){alert(lang==='uz'?"Brauzer lokatsiyani qo'llab-quvvatlamaydi":"Браузер не поддерживает геолокацию");return;}
+                      navigator.geolocation.getCurrentPosition(
+                        pos=>{
+                          const {latitude:la,longitude:lo}=pos.coords;
+                          fetch(`https://nominatim.openstreetmap.org/reverse?lat=${la}&lon=${lo}&format=json`)
+                            .then(r=>r.json())
+                            .then(d=>setAddr(d.display_name||`${la.toFixed(5)}, ${lo.toFixed(5)}`))
+                            .catch(()=>setAddr(`${la.toFixed(5)}, ${lo.toFixed(5)}`));
+                        },
+                        ()=>alert(lang==='uz'?"Lokatsiyaga ruxsat berilmadi":"Доступ к геолокации запрещён")
+                      );
+                    }}
+                    style={{position:'absolute',right:0,top:0,bottom:0,width:'2.6rem',background:'var(--gold)',border:'none',borderRadius:'0 var(--r) var(--r) 0',cursor:'pointer',fontSize:'1rem',display:'flex',alignItems:'center',justifyContent:'center',transition:'background .2s'}}
+                    onMouseOver={e=>e.currentTarget.style.background='var(--gold2)'}
+                    onMouseOut={e=>e.currentTarget.style.background='var(--gold)'}
+                  >📍</button>
+                </div>
+                <div style={{fontSize:'.73rem',color:'var(--text3)',marginTop:'.3rem'}}>
+                  {lang==='uz'?"📍 tugmasini bosib joylashuvingizni avtomatik aniqlang":"Нажмите 📍 для автоматического определения адреса"}
+                </div>
+              </div>
               <div style={{display:'flex',gap:'.65rem',marginTop:'.4rem'}}>
                 <button className="bout" style={{flex:1}} onClick={()=>setStep('choose')}>← {lang==='uz'?"Orqaga":"Назад"}</button>
                 <button className="bpri" style={{flex:2}} onClick={confirm}>{lang==='uz'?"Tasdiqlash ✓":"Подтвердить ✓"}</button>
@@ -1143,6 +1201,73 @@ function AdminPage({ctx}){
         )}
       </main>
     </div>
+  );
+}
+
+function Footer({ctx}){
+  const {lang}=ctx;
+  return(
+    <footer style={{background:'#1a1a1a',borderTop:'1px solid #2a2a2a',marginTop:'3rem'}}>
+      <div style={{background:'#f7f7f7',padding:'2.5rem 2rem',textAlign:'center'}}>
+        <h3 style={{fontFamily:"'Playfair Display',serif",color:'#1a1a1a',fontSize:'1.4rem',fontWeight:600,marginBottom:'2rem'}}>
+          {lang==='uz'?"Smartfonlar va maishiy texnika muddatli to\'lovga":"Смартфоны и бытовая техника в рассрочку"}
+        </h3>
+        <div style={{display:'flex',justifyContent:'center',gap:'3rem',flexWrap:'wrap',maxWidth:900,margin:'0 auto'}}>
+          {[
+            {ico:'⏱',title:lang==='uz'?"Muddatli to\'lovga sotib olish":"Покупка в рассрочку",sub:lang==='uz'?"Qulay bo\'lib to\'lash":"Удобная оплата частями"},
+            {ico:'🚚',title:lang==='uz'?"Bepul yetkazib berish":"Бесплатная доставка",sub:lang==='uz'?"500 000 so\'mdan yuqori buyurtmalar uchun.":"Для заказов свыше 500 000 сум."},
+            {ico:'🛡',title:lang==='uz'?"Mahsulotlar uchun kafolat":"Гарантия на товары",sub:lang==='uz'?"Vakolatli ta\'mirlash yoki almashtirish":"Авторизованный ремонт или замена"},
+          ].map((b,i)=>(
+            <div key={i} style={{display:'flex',alignItems:'flex-start',gap:'1rem',maxWidth:280,textAlign:'left'}}>
+              <div style={{width:48,height:48,borderRadius:'50%',background:'#e8e8e8',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.3rem',flexShrink:0}}>{b.ico}</div>
+              <div>
+                <div style={{fontWeight:700,color:'#1a1a1a',fontSize:'1rem',marginBottom:'.25rem'}}>{b.title}</div>
+                <div style={{color:'#777',fontSize:'.87rem',lineHeight:1.5}}>{b.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{padding:'3rem 2rem 2rem',maxWidth:1380,margin:'0 auto',display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'2rem'}}>
+        <div>
+          <div style={{color:'#888',fontSize:'.83rem',marginBottom:'.6rem'}}>{lang==='uz'?"Savolingiz bormi? Qo\'ng\'iroq qiling":"Есть вопросы? Позвоните нам"}</div>
+          <div style={{color:'#fff',fontSize:'1.45rem',fontWeight:700,marginBottom:'1.2rem'}}>+998 97 506 20 20</div>
+          <div style={{display:'flex',gap:'.6rem',flexWrap:'wrap'}}>
+            {[{l:'f',bg:'#1877F2'},{l:'✈',bg:'#0088cc'},{l:'📷',bg:'#e1306c'},{l:'▶',bg:'#FF0000'},{l:'✉',bg:'#555'}].map((s,i)=>(
+              <div key={i} style={{width:38,height:38,borderRadius:'50%',background:s.bg,display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',fontSize:'.9rem',cursor:'pointer'}}>{s.l}</div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <div style={{color:'#fff',fontWeight:700,marginBottom:'1rem'}}>{lang==='uz'?"Kompaniya":"Компания"}</div>
+          {(lang==='uz'?["Yuridik shaxslar uchun","Biz haqimizda","Yangiliklar va bloglar","IMEI ni tekshirish","Texnomartda ishlash"]:["Для юридических лиц","О нас","Новости и блоги","Проверить IMEI","Работа в Texnomart"]).map((l,i)=>(
+            <a key={i} href="#" style={{display:'block',color:'#aaa',fontSize:'.86rem',textDecoration:'none',marginBottom:'.5rem'}}>{l}</a>
+          ))}
+        </div>
+        <div>
+          <div style={{color:'#fff',fontWeight:700,marginBottom:'1rem'}}>{lang==='uz'?"Ma\'lumot":"Информация"}</div>
+          {(lang==='uz'?["Bepul yetkazib berish","Xizmat ko\'rsatish markazlari","Shaxsiy kabinet","Aloqa raqamlari","Ommaviy taklif shartnomasi"]:["Бесплатная доставка","Сервисные центры","Личный кабинет","Контактные номера","Договор публичной оферты"]).map((l,i)=>(
+            <a key={i} href="#" style={{display:'block',color:'#aaa',fontSize:'.86rem',textDecoration:'none',marginBottom:'.5rem'}}>{l}</a>
+          ))}
+        </div>
+        <div>
+          <div style={{color:'#fff',fontWeight:700,marginBottom:'1rem'}}>{lang==='uz'?"Haridorga yordam":"Помощь покупателю"}</div>
+          {(lang==='uz'?["Maxsulotni qaytarish","Mahsulotlar uchun kafolat","Do\'konlar manzillari"]:["Возврат товара","Гарантия на товары","Адреса магазинов"]).map((l,i)=>(
+            <a key={i} href="#" style={{display:'block',color:'#aaa',fontSize:'.86rem',textDecoration:'none',marginBottom:'.5rem'}}>{l}</a>
+          ))}
+        </div>
+      </div>
+      <div style={{borderTop:'1px solid #2a2a2a',padding:'1.1rem 2rem',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:'1rem'}}>
+        <div style={{color:'#555',fontSize:'.77rem'}}>
+          2016-2026 © tasanno.uz. {lang==='uz'?"Barcha huquqlar himoyalangan.":"Все права защищены."}
+        </div>
+        <div style={{display:'flex',gap:'.4rem'}}>
+          {['💳','💰','🔵','🟡'].map((p,i)=>(
+            <div key={i} style={{background:'#2a2a2a',border:'1px solid #333',borderRadius:5,width:42,height:26,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'.9rem'}}>{p}</div>
+          ))}
+        </div>
+      </div>
+    </footer>
   );
 }
 
